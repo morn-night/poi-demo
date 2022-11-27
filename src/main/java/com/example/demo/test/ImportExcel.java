@@ -22,19 +22,24 @@ public class ImportExcel {
         //模拟数据
         ArrayList<People> dataList=new ArrayList<>();
 
-        for(int i=0;i<10000;i++){
+        for(int i=0;i<500000;i++){
             People people=new People("姓名"+i,i+"","男","110");
             dataList.add(people);
+
         }
 
+        Long st=System.currentTimeMillis();
         //单线程导出excel
-        //doExportOneThread(dataList);
+        doExportOneThread(dataList);
 
         //多线程,单表，导出excel
-        //doExportMoreThreadByOneExcel(dataList,4);
+//        doExportMoreThreadByOneExcel(dataList,4);
 
         //多线程,多表，导出excel
-        doExportMoreThreadByMoreExcel(dataList,4);
+//        doExportMoreThreadByMoreExcel(dataList,4);
+
+        Long et=System.currentTimeMillis();
+        System.out.println("Time: "+(et-st));
     }
 
     /**
@@ -54,20 +59,25 @@ public class ImportExcel {
         //反射获取
         Field[] fields=People.class.getDeclaredFields();
         Integer currentRow=0;
+
+        if (currentRow==0){
+            Row row=sheet.createRow(currentRow);
+            for(int i=0;i<fields.length;i++){
+                Cell cell=row.createCell(i);
+                cell.setCellValue(fields[i].getName());
+            }
+            currentRow++;
+        }
         while (iterator.hasNext()){
             People people= iterator.next();
             Row row=sheet.createRow(currentRow);
             for (int i=0;i<fields.length;i++){
                 Cell cell= row.createCell(i);
-                if (currentRow==0){
-                    cell.setCellValue(fields[i].getName());
-                }else{
-                    cell.setCellValue(String.valueOf(fields[i].get(people)));
-                }
+                cell.setCellValue(String.valueOf(fields[i].get(people)));
             }
             currentRow++;
         }
-        FileOutputStream fileOutputStream=new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\test.xlsx"));
+        FileOutputStream fileOutputStream=new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\test.xls"));
         workbook.write(fileOutputStream);
 
     }

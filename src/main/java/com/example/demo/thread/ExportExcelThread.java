@@ -87,7 +87,37 @@ public class ExportExcelThread implements Runnable{
         countDownLatch.countDown();
     }
 
-    //多个Excel导出
+//    //多个Excel导出
+//    private void doMoreExport() throws Exception{
+//        SXSSFSheet sheet=workbook.createSheet();
+//        Iterator<People> iterator=data.iterator();
+//        Field[] fields=People.class.getDeclaredFields();
+//        Integer currentRow=0;
+//
+//        if (currentRow==0){
+//            Row row= sheet.createRow(currentRow);
+//            for (int i=0;i<fields.length;i++){
+//                Cell cell=row.createCell(i);
+//                cell.setCellValue(String.valueOf(fields[i].getName()));
+//            }
+//            currentRow++;
+//        }
+//        while (iterator.hasNext()) {
+//            People people = iterator.next();
+//            Row row = sheet.createRow(currentRow);
+//            for (int i = 0; i < fields.length; i++) {
+//                Cell cell = row.createCell(i);
+//                cell.setCellValue(String.valueOf(fields[i].get(people)));
+//            }
+//            currentRow++;
+//        }
+//
+//        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\test-多线程分表"+Thread.currentThread().getName()+".xlsx"));
+//        workbook.write(fileOutputStream);
+//        System.out.println(Thread.currentThread().getName()+" 文件写入成功...");
+//    }
+
+    //多个Excel导出为ZIP
     private void doMoreExport() throws Exception{
         SXSSFSheet sheet=workbook.createSheet();
         Iterator<People> iterator=data.iterator();
@@ -112,10 +142,14 @@ public class ExportExcelThread implements Runnable{
             currentRow++;
         }
 
-        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\test-多线程分表"+Thread.currentThread().getName()+".xlsx"));
+        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\more\\test-多线程分表"+Thread.currentThread().getName()+".xlsx"));
         workbook.write(fileOutputStream);
         System.out.println(Thread.currentThread().getName()+" 文件写入成功...");
     }
 
 
 }
+
+
+
+

@@ -22,7 +22,7 @@ public class ImportExcel {
         //模拟数据
         ArrayList<People> dataList=new ArrayList<>();
 
-        for(int i=0;i<500000;i++){
+        for(int i=0;i<1000000;i++){
             People people=new People("姓名"+i,i+"","男","110");
             dataList.add(people);
 
@@ -30,13 +30,13 @@ public class ImportExcel {
 
         Long st=System.currentTimeMillis();
         //单线程导出excel
-        doExportOneThread(dataList);
+//        doExportOneThread(dataList);
 
         //多线程,单表，导出excel
 //        doExportMoreThreadByOneExcel(dataList,4);
 
         //多线程,多表，导出excel
-//        doExportMoreThreadByMoreExcel(dataList,4);
+        doExportMoreThreadByMoreExcel(dataList,100);
 
         Long et=System.currentTimeMillis();
         System.out.println("Time: "+(et-st));
@@ -170,7 +170,7 @@ public class ImportExcel {
             new Thread(new ExportExcelThread(data, true, workbook),"线程"+i).start();
         }
 
-        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\test-多线程分页.xlsx"));
+//        FileOutputStream fileOutputStream = new FileOutputStream(new File("D:\\我的学习\\学学学\\POI导出excel\\test\\more\\test-多线程分页.xlsx"));
 
 
     }
